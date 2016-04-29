@@ -1,0 +1,193 @@
+mainApp.
+	directive('canvasClock', function(){
+		return {
+			scope: {
+				width: '@',
+				height: '@'
+			},
+			restrict: 'A',
+			link: function(scope, element, attrs){
+				// http://www.2cto.com/kf/201212/174227.html
+				var canvas = element[0];
+				var cxt = canvas.getContext('2d');
+				var width = scope.width;
+				var height = scope.height;
+				var origin_x = width / 2;
+				var origin_y = width / 2;
+				// 半径
+				var radius = (width > height ? (width - 50) / 2 : (height - 50) / 2);
+				// 刻度针宽度
+				var cover_width = 6, hour_width = 7, minute_width = 5, second_width = 3;
+				// 刻度颜色
+				var cover_color = '#0066CC', hour_color = '#6b37d2', minute_color = '#6b37d2';
+				var h_point_color = '#000', m_point_color = '#000', s_point_color = '#000';
+				// 刻度位移
+				var hour_length = 20, minute_length = 10;
+				// 刻度起始和终止位置
+				var hour_end_pos = minute_end_pos = -(radius - cover_width/2), hour_start_pos = hour_end_pos + hour_length, 
+					minute_start_pos = minute_end_pos + minute_length;
+				// 指针起始和终止位置
+				var h_point_end_pos = m_point_end_pos = s_point_end_pos = 10, h_point_start_pos = -(radius - hour_length - 50),
+					m_point_start_pos = -(radius - hour_length - 30), s_point_start_pos = -(radius - hour_length - 10);
+				//cxt.translate(radius, radius);
+
+				function drawFace(cxt, radius){
+					cxt.clearRect(0, 0, canvas.width, canvas.height);
+					/*
+					var img = new Image();
+		        	img.src = "/public/images/dear.jpg";
+		        	cxt.drawImage(img, 0, 0, 720, 720, 25, 25, radius * 2, radius * 2);	
+		            */
+		            //表盘
+		            /*
+		            cxt.shadowOffsetX = 1;
+		            cxt.shadowOffsetY = 1;
+		            cxt.shadowBlur = 15;
+		            cxt.shadowColor = 'rgba(0, 0, 0, 0.5)';
+		            cxt.strokeStyle = cover_color;
+		            cxt.lineWidth = cover_width;
+		            */
+		            cxt.beginPath();
+		            cxt.arc(origin_x, origin_y, radius, 0, 2 * Math.PI);
+		            cxt.fillStyle = 'white';
+  					cxt.fill();
+  					var grad;
+  					grad = cxt.createRadialGradient(origin_x, origin_y, radius*0.95, origin_x, origin_y, radius*1.05);
+					grad.addColorStop(0, '#333');
+					grad.addColorStop(0.5, 'white');
+					grad.addColorStop(1, '#333');
+					cxt.strokeStyle = grad;
+					cxt.lineWidth = radius * 0.1;
+					cxt.stroke();
+					cxt.beginPath();
+					cxt.arc(origin_x, origin_y, radius*0.1, 0, 2 * Math.PI);
+					cxt.fillStyle = '#333';
+					cxt.fill();
+		            cxt.stroke();
+		            cxt.closePath();
+				}
+
+				function drawNumbers(cxt, radius){
+					//刻度(小时)
+		            for (var i = 0; i < 12; i++) {
+		                cxt.save();//保存当前状态
+		                cxt.lineWidth = hour_width;
+		                cxt.strokeStyle = hour_color;
+		                //设置原点
+		                cxt.translate(origin_x, origin_y);
+		                //设置旋转角度
+		                cxt.rotate(30 * i * Math.PI / 180);//弧度   角度*Math.PI/180
+		                cxt.beginPath();
+		                cxt.moveTo(0, hour_start_pos);
+		                cxt.lineTo(0, hour_end_pos);
+		                cxt.stroke();
+		                cxt.closePath();
+		                cxt.restore();//把原来状态恢复回来
+		            }
+		            //分刻度
+		            for (var i = 0; i < 60; i++) {
+		                cxt.save();
+		                cxt.lineWidth = minute_width;
+		                cxt.strokeStyle = minute_color;
+		                cxt.translate(origin_x, origin_y);
+		                cxt.rotate(i * 6 * Math.PI / 180);
+		                cxt.beginPath();
+		                cxt.moveTo(0, minute_start_pos);
+		                cxt.lineTo(0, minute_end_pos);
+		                cxt.stroke();
+		                cxt.closePath();
+		                cxt.restore();
+		            }
+				}
+
+				function drawTime(cxt, radius){
+					var now = new Date();
+					var sec = now.getSeconds();
+		            var min = now.getMinutes();
+		            var hour = now.getHours();
+		            hour > 12 ? hour - 12 : hour;
+		            hour += (min / 60);
+					//以下的时针、分针、秒针均要转动，所以在这里要设置其异次元空间的位置
+		            //根据当前的小时数、分钟数、秒数分别设置各个针的角度即可
+		            //-----------------------------时针-----------------------------
+		            cxt.save();
+		            cxt.lineWidth = hour_width;
+		            cxt.strokeStyle = h_point_color;
+		            cxt.translate(origin_x, origin_y);
+		            cxt.rotate(hour * 30 * Math.PI / 180);//每小时旋转30度
+		            cxt.beginPath();
+		            cxt.moveTo(0, h_point_start_pos);
+		            cxt.lineTo(0, h_point_end_pos);
+		            cxt.stroke();
+		            cxt.closePath();
+		            cxt.restore();
+
+		            //-----------------------------分针-----------------------------
+		            cxt.save();
+		            cxt.lineWidth = minute_width;
+		            cxt.strokeStyle = m_point_color;
+		            cxt.translate(origin_x, origin_y);
+		            cxt.rotate(min * 6 * Math.PI / 180);//每分钟旋转6度
+		            cxt.beginPath();
+		            cxt.moveTo(0, m_point_start_pos);
+		            cxt.lineTo(0, m_point_end_pos);
+		            cxt.stroke();
+		            cxt.closePath();
+		            cxt.restore();
+
+		            //-----------------------------秒针-----------------------------
+		            cxt.save();
+		            cxt.lineWidth = second_width;
+		            cxt.strokeStyle = s_point_color;
+		            cxt.translate(origin_x, origin_y);
+		            cxt.rotate(sec * 6 * Math.PI / 180);//每秒旋转6度
+		            cxt.beginPath();
+		            cxt.moveTo(0, s_point_start_pos);
+		            cxt.lineTo(0, s_point_end_pos);
+		            cxt.stroke();
+		            cxt.closePath();
+
+		            //美化表盘，画中间的小圆
+		            cxt.beginPath();
+		            cxt.arc(0, 0, 7, 0, 360);
+		            cxt.fillStyle = "#FFFF00";
+		            cxt.fill();
+		            cxt.strokeStyle = "#FF0000";
+		            cxt.stroke();
+		            cxt.closePath();
+
+		            //秒针上的小圆
+		            cxt.beginPath();
+		            cxt.arc(0, s_point_start_pos + 20, 7, 0, 360);
+		            cxt.fillStyle = "#FFFF00";
+		            cxt.fill();
+		            cxt.stroke();
+		            cxt.closePath();
+		            cxt.restore();
+
+		            //显示时间
+		            cxt.font = "18px 微软雅黑";
+		            cxt.lineWidth = 2;
+		            cxt.fillStyle = "#0000FF";
+		            hour=now.getHours();
+		            var str = (hour >= 10 ? hour : ("0" + hour)) + ":" + (min >= 10 ? min : ("0" + min)) + ":" + (sec >= 10 ? sec : ("0" + sec))
+		            cxt.fillText(str, origin_x - 30, height);
+
+		            //中国制造
+		            /*
+		            cxt.font = "12px 宋体";
+		            cxt.lineWidth = 1;
+		            cxt.fillText("Made In ShangHai,China", );
+		            */
+				}
+
+				function drawClock(){
+		            drawFace(cxt, radius);
+		            drawNumbers(cxt, radius);
+		            drawTime(cxt, radius);
+				}
+				drawClock();
+				setInterval(drawClock, 1000);
+			}
+		}
+	})

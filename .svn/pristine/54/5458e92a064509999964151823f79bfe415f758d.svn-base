@@ -1,0 +1,20 @@
+mainApp
+	.controller('WelcomeCtrl', function($scope){
+		$scope.username = "李延杰";
+	})
+	。controller('ClockCtrl', function($scope){
+
+	})
+	.controller('PythonTime', function($scope){
+
+	})
+	.controller('PhpTime', function($scope){
+
+	})
+	.controller('JsTime', function($scope){
+
+	})
+	.controller('UnixTime', function($scope){
+		
+	})
+;

@@ -1,0 +1,26 @@
+{
+  "name": "tool",
+  "description": "normal tool for web and ops development",
+  "main": "app.js",
+  "authors": [
+    "李延杰 <liyanjie419@pingan.com.cn>"
+  ],
+  "license": "MIT",
+  "keywords": [
+    "tool",
+    "datetime",
+    "ops",
+    "web",
+    "develop"
+  ],
+  "moduleType": [],
+  "homepage": "http://blog.liyanjie.top",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "app/bower_components",
+    "test",
+    "tests"
+  ]
+}

@@ -1,0 +1,9 @@
+<canvas canvas-clock width="300" height="300"></canvas>
+<ul class="am-list">
+	<li><a>时区：<label>{{timezone}}</label></a></li>
+	<li><a>AM/PM：<label>{{meridiem}}</label></a></li>
+	<li><a>日期： <label>{{date}}</label></a></li>
+	<li><a>时间： <label>{{time}}</label></a></li>
+	<li><a>详细时间：<label>{{datetime}}</label></a></li>
+	<li><a>时间戳：<label>{{unixTime}}</label></a></li>
+</ul>

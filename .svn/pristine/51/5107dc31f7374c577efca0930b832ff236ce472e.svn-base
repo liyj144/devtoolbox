@@ -1,0 +1,2 @@
+hello {{username}}
+<clock id="clock" data-ng-include="'views/tpl/clock.html'"></clock>

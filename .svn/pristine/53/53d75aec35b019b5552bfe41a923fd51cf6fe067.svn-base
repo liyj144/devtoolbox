@@ -1,0 +1,30 @@
+<div class="am-panel am-panel-secondary">
+	<div class="am-panel-hd">Python常用时间处理</div>
+	<div class="am-panel-bd">
+		<h2>时间戳：</h2>
+		<pre>
+from time import time
+time() # 1459924740.645872
+
+from time import mktime, strptime
+mktime(strptime("2016-04-06", "%Y-%m-%d")) # 1459872000.0
+		</pre>
+		<h2>time struct:
+		<pre>
+from time import strptime
+strptime("2016-04-06", "%Y-%m-%d") # time.struct_time(tm_year=2016, tm_mon=4, tm_mday=6, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=2, tm_yday=97, tm_isdst=-1)
+
+from time import localtime
+localtime(1459872000.0) # time.struct_time(tm_year=2016, tm_mon=4, tm_mday=6, tm_hour=0, tm_min=0, tm_sec=0, tm_wday=2, tm_yday=97, tm_isdst=0)
+		</pre>
+		<h2>timestr: </h2>
+		<pre>
+from datetime import date, datetime
+date.today() # datetime.date(2016, 4, 7)
+datetime.today() # datetime.datetime(2016, 4, 7, 11, 13, 54, 441011)
+
+from time import strftime
+time.strftime("%Y-%m-%d") # '2016-04-06'
+		</pre>
+	</div>
+</div>
