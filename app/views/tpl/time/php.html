@@ -1,0 +1,43 @@
+<h1 class="ui header">PHP常用时间处理
+<div class="sub header">
+PHP中日期主要使用date、time、strftime、strtotime 四个强大的函数来进行各种时间转换。
+</div>
+</h1>
+<h2 class="ui header">时间戳：</h2>
+time(): 返回当前时间的 Unix 时间戳。
+<div hljs>
+echo time(); # 1462869021
+</div>
+strtotime(): 将任何英文文本的日期时间描述解析为 Unix 时间戳。
+语法
+strtotime(time,now)
+<table>
+<tr><td>参数</td><td>描述</td></tr>
+<tr><td>time</td><td>规定要解析的时间字符串。</td></tr>
+<tr><td>now</td><td>用来计算返回值的时间戳。如果省略该参数，则使用当前时间。</td></tr>
+</table>
+<div hljs>
+echo strtotime("2016-05-10 16:30:21"); # 1462869021
+echo strtotime("now"); # 1462870211
+echo strtotime("+1 week + 5 hours"); # 1463493011
+echo strtotime("last Monday"); # 1462723200
+</div>
+<h2 class="ui header">time str:</h2>
+strftime(): 根据区域设置格式化本地时间／日期。
+语法
+strftime(format,timestamp)
+参数	描述
+format	可选。规定如何返回结果。
+timestamp	可选。
+<div hljs>
+echo strftime("%Y-%m-%d %H:%M:%S", 1462869021); # 2016-05-10 16:30:21
+</div>
+date(): 格式化一个本地时间／日期。
+语法
+date(format,timestamp)
+参数	描述
+format	必需。规定如何返回结果。
+timestamp	可选。
+<div hljs>
+echo date("Y-m-d H:i:s"); # 2016-05-10
+</div>
