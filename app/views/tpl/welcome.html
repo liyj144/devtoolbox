@@ -1,9 +1,30 @@
-<h1>您好, 欢迎来到工具世界：</h1>
-<div class="ui three column stackable grid container">
-	<clock id="clock" class="column" data-ng-include="'views/tpl/time/clock.html'" data-ng-controller="ClockCtrl"></clock>
-	<div class="column" data-ng-include="'views/tpl/time/python.html'" data-ng-controller="PythonTime"></div>
-	<div class="column" data-ng-include="'views/tpl/time/php.html'" data-ng-controller="PhpTime"></div>
-	<div class="column" data-ng-include="'views/tpl/time/js.html'" data-ng-controller="JsTime"></div>
-	<div class="column" data-ng-include="'views/tpl/time/unix.html'" data-ng-controller="UnixTime"></div>
-	<div class="column" data-ng-include="'views/tpl/time/go.html'" data-ng-controller="GoTime"></div>
+<div class="ui vertical inverted sidebar menu left">
+	<div class="item">
+		<div class="header">工具函数</div>
+		<div class="menu">
+			<a class="item" href="">时间函数</a>
+			<a class="item" href="">字符串函数</a>
+			<a class="item" href="">常见排序</a>
+		</div>
+	</div>
+</div>
+<div class="ui black big launch right attached fixed button">
+	<i class="content icon"></i><span class="text">菜单</span>
+</div>
+<div class="ui masthead vertical tab segment">
+	<div class="">
+	<div class="ui three item stackable tabs menu">
+		<a class="item" data-tab="introduction"></a>
+		<a class="item" data-tab="definition"></a>
+		<a class="item active" data-tab="examples"></a>
+  	</div>
+	<h1 class="ui header">您好, 欢迎来到工具世界：</h1>
+	<div class="ui three column stackable grid container">
+		<clock id="clock" class="column" data-ng-include="'views/tpl/time/clock.html'" data-ng-controller="ClockCtrl"></clock>
+		<div class="column" data-ng-include="'views/tpl/time/python.html'" data-ng-controller="PythonTime"></div>
+		<div class="column" data-ng-include="'views/tpl/time/php.html'" data-ng-controller="PhpTime"></div>
+		<div class="column" data-ng-include="'views/tpl/time/js.html'" data-ng-controller="JsTime"></div>
+		<div class="column" data-ng-include="'views/tpl/time/unix.html'" data-ng-controller="UnixTime"></div>
+		<div class="column" data-ng-include="'views/tpl/time/go.html'" data-ng-controller="GoTime"></div>
+	</div>
 </div>
